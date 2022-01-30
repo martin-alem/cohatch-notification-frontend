@@ -6,8 +6,33 @@ import ChatHeader from "../../components/chat_header/ChatHeader";
 import List from "../../components/list/List";
 import Messages from "./../../components/messages/Messages";
 import Input from "../../components/input/Input";
+import httpAgent from "./../../util/httpAgent";
+import { UserContext } from "./../../context/userContext";
 
 class Home extends React.Component {
+  static contextType = UserContext;
+  componentDidMount() {
+    const fetchUser = async () => {
+      try {
+        const option = {
+          headers: { Accept: "application/json" },
+          body: null,
+        };
+        const serverResponse = await httpAgent("GET", `${process.env.REACT_APP_AUTH_API}/api/v1/authorize`, option);
+        if (serverResponse.ok) {
+          const jsonResponse = await serverResponse.json();
+          this.context.setUser(jsonResponse["payload"]);
+        } else {
+          this.setState({ error: true });
+        }
+      } catch (error) {
+        console.error(error);
+        this.setState({ error: true });
+      }
+    };
+
+    fetchUser();
+  }
   render() {
     return (
       <div className="Home">

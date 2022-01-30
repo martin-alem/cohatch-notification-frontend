@@ -3,8 +3,10 @@ import GoogleLogin from "react-google-login";
 import "./Login.css";
 import httpAgent from "./../../util/httpAgent";
 import Alert from "../../components/alert/Alert";
+import { UserContext } from "./../../context/userContext";
 
 class Login extends React.Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = { error: false };
@@ -19,11 +21,13 @@ class Login extends React.Component {
       const serverResponse = await httpAgent("POST", `${process.env.REACT_APP_AUTH_API}/api/v1/login`, option);
       if (serverResponse.ok) {
         const jsonResponse = await serverResponse.json();
+        this.context.setUser(jsonResponse["payload"]);
         window.location.replace("/home");
       } else {
         this.setState({ error: true });
       }
     } catch (error) {
+      console.error(error);
       this.setState({ error: true });
     }
   };
