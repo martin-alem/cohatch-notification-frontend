@@ -6,6 +6,7 @@ import OnlineUsers from "../../components/online_users/OnlineUser";
 import ChatHeader from "../../components/chat_header/ChatHeader";
 import List from "../../components/list/List";
 import Messages from "./../../components/messages/Messages";
+import Input from "../../components/input/Input";
 
 class Home extends React.Component {
   render() {
@@ -19,8 +20,15 @@ class Home extends React.Component {
             </List>
           </div>
           <div className="Home-chat-area">
-            <ChatHeader />
-            <Messages />
+            <div className="header">
+              <ChatHeader />
+            </div>
+            <div className="messages">
+              <Messages />
+            </div>
+            <div className="input">
+              <Input />
+            </div>
           </div>
           <div className="Home-online-users">
             <List title="Online Users">

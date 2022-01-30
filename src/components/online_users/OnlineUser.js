@@ -15,6 +15,86 @@ class OnlineUser extends React.Component {
         lastName: "Alemajoh",
         photo: "",
       },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      },
+      {
+        firstName: "John",
+        lastName: "Deo",
+        photo: "",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Alemajoh",
+        photo: "",
+      }, 
     ];
     return (
       <div className="OnlineUsers">
