@@ -1,0 +1,13 @@
+.Login {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Login-container {
+  width: 30rem;
+  height: 30rem;
+  border: 1px solid #000;
+}
