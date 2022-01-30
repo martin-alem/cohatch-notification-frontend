@@ -1,0 +1,15 @@
+.User {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.User h1 {
+  width: 20rem;
+  text-transform: capitalize;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

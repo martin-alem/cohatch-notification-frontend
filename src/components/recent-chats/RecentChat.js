@@ -1,6 +1,6 @@
 import React from "react";
 import "./RecentChat.css";
-import Chat from "./../chat/Chat";
+import Chat from "../chat/Chat";
 
 class RecentChat extends React.Component {
   render() {

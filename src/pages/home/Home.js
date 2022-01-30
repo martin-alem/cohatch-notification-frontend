@@ -1,7 +1,8 @@
 import React from "react";
 import "./Home.css";
 import Header from "./../../components/header/Header";
-import RecentChat from "../../components/recent-chat/RecentChat";
+import RecentChats from "../../components/recent-chats/RecentChat";
+import OnlineUsers from "../../components/online_users/OnlineUser";
 import List from "../../components/list/List";
 
 class Home extends React.Component {
@@ -12,11 +13,15 @@ class Home extends React.Component {
         <div className="Home-main">
           <div className="Home-recent-chats">
             <List title="Recent Chats">
-              <RecentChat />
+              <RecentChats />
             </List>
           </div>
           <div className="Home-chat-area"></div>
-          <div className="Home-online-users"></div>
+          <div className="Home-online-users">
+            <List title="Online Users">
+              <OnlineUsers />
+            </List>
+          </div>
         </div>
       </div>
     );
