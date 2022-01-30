@@ -15,7 +15,6 @@
 .Home-recent-chats {
   height: 100vh;
   border-right: 5px solid #000;
-  overflow: auto;
 }
 
 .Home-online-users {
@@ -37,6 +36,10 @@
 .Home-chat-area .messages {
   height: 80%;
   overflow: auto;
+}
+
+.Home-chat-area .messages::-webkit-scrollbar {
+  width: 0px;
 }
 
 .Home-chat-area .input {

@@ -1,4 +1,18 @@
 .List {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.List-header {
   padding: 1rem;
+}
+
+.List-children {
+  overflow: auto;
+}
+
+.List-children::-webkit-scrollbar {
+  width: 0px;
 }

@@ -12,7 +12,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="Home">
-        <Header />
+        {/* <Header /> */}
         <div className="Home-main">
           <div className="Home-recent-chats">
             <List title="Recent Chats">

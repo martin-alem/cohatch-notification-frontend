@@ -1,12 +1,15 @@
 .ChatHeader {
   width: 100%;
-  background-color: #000;
+  background-color: #c4c4c4;
   padding: 0.5rem;
   display: flex;
-  align-items: flex-start;
+  justify-content: space-between;
   gap: 1rem;
 }
 
-.ChatHeader h1 {
-  color: #fff !important;
+.ChatHeader-peer {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
 }
+

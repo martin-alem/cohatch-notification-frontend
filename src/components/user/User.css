@@ -1,8 +1,16 @@
 .User {
   width: 100%;
+}
+
+.User:hover {
+  background-color: #c4c4c4;
+}
+
+.User-content {
+  padding: 1rem;
+  width: 100%;
   display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
   cursor: pointer;
 }
 

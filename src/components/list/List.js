@@ -10,9 +10,11 @@ class List extends React.Component {
     const { children, title } = this.props;
     return (
       <div className="List">
-        <h1 className="ui huge header">{title}</h1>
+        <div className="List-header">
+          <h1 className="ui huge header">{title}</h1>
+        </div>
         <div className="ui section divider"></div>
-        {children}
+        <div className="List-children">{children}</div>
       </div>
     );
   }

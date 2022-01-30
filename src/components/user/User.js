@@ -10,8 +10,10 @@ class User extends React.Component {
     const { firstName, lastName, photo } = this.props.user;
     return (
       <div className="User">
-        <Image size="small" alt={`${firstName} ${lastName}`} photo={photo} />
-        <h1 className="ui header">{`${firstName} ${lastName}`}</h1>
+        <div className="User-content">
+          <Image size="small" alt={`${firstName} ${lastName}`} photo={photo} />
+          <h1 className="ui header">{`${firstName} ${lastName}`}</h1>
+        </div>
       </div>
     );
   }

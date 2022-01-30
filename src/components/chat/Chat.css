@@ -1,10 +1,19 @@
 .Chat {
   width: 100%;
+}
+
+.Chat-content {
+  padding: 1rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
+}
+
+.Chat:hover {
+  background-color: #c4c4c4;
 }
 
 .Chat-details {
@@ -43,4 +52,8 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.current {
+  background-color: #c4c4c4;
 }
