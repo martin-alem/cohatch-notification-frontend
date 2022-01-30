@@ -1,0 +1,36 @@
+.Message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.Message-container-local {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.Message-container-remote {
+  background-color: #c4c4c4;
+  color: #000000;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.Message-local {
+  align-self: flex-start;
+}
+
+.Message-remote {
+  align-self: flex-end;
+}
+
+.Message-time {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.Message h6 {
+  margin-top: 0.5rem !important;
+}
