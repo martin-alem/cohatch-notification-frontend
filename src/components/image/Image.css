@@ -1,0 +1,19 @@
+.Image-image {
+  border: 2px solid #eeeeee;
+  border-radius: 50%;
+}
+
+.Image-small {
+  width: 5rem;
+  height: 5rem;
+}
+
+.Image-medium {
+  width: 10rem;
+  height: 10rem;
+}
+
+.Image-large {
+  width: 15rem;
+  height: 15rem;
+}

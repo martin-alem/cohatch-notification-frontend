@@ -1,0 +1,15 @@
+.Navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+}
+
+.Navigation-notification,
+.Navigation-logout {
+  cursor: pointer;
+  font-size: 3rem;
+  position: relative;
+}
+
+
