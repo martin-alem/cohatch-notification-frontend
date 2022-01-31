@@ -4,7 +4,7 @@ import User from "./../user/User";
 import httpAgent from "./../../util/httpAgent";
 import { UserContext } from "./../../context/userContext";
 
-function OnlineUser() {
+function OnlineUser({ socket }) {
   const userContext = React.useContext(UserContext);
   const { _id: userId } = userContext.user;
   const [onlineUsers, setOnlineUsers] = React.useState([]);
@@ -24,8 +24,9 @@ function OnlineUser() {
         }
       } catch (error) {}
     };
-
     fetchOnlineUsers();
+    socket.on("join", listenForOnlineUsers);
+    socket.on("leave", listenForOnlineUsersLeave);
   }, []);
 
   const sanitizeResponse = response => {
@@ -37,6 +38,44 @@ function OnlineUser() {
       }
     }
     return onlineUsers;
+  };
+
+  const listenForOnlineUsers = user => {
+    const onlineUser = JSON.parse(user);
+    setOnlineUsers(prevState => {
+      if (inObjectArray(onlineUser, prevState, "_id")) {
+        return prevState;
+      } else {
+        return [...prevState, onlineUser];
+      }
+    });
+  };
+
+  const listenForOnlineUsersLeave = user => {
+    const onlineUser = JSON.parse(user);
+    setOnlineUsers(prevState => {
+      const newOnlineUsers = removeInObjectArray(onlineUser, prevState, "_id");
+      return newOnlineUsers;
+    });
+  };
+
+  const inObjectArray = (object, array, field) => {
+    for (const value of array) {
+      if (object[field] === value[field]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const removeInObjectArray = (object, array, field) => {
+    const newArray = [];
+    for (const value of array) {
+      if (object[field] !== value[field]) {
+        newArray.push(value);
+      }
+    }
+    return newArray;
   };
   return (
     <div className="OnlineUsers">

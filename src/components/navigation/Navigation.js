@@ -12,6 +12,7 @@ function Navigation() {
 
       const serverResponse = await httpAgent("POST", `${process.env.REACT_APP_AUTH_API}/api/v1/logout`, option);
       if (serverResponse.ok) {
+        window.localStorage.clear();
         window.location.replace("/");
       } else {
         console.error("Unable to logout");

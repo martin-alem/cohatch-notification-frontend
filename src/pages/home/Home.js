@@ -8,9 +8,11 @@ import Messages from "./../../components/messages/Messages";
 import Input from "../../components/input/Input";
 import httpAgent from "./../../util/httpAgent";
 import { UserContext } from "./../../context/userContext";
+import useWebSocket from "./../../hooks/useWebSocket";
 
 function Home() {
   const userContext = React.useContext(UserContext);
+  const socket = useWebSocket();
   React.useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -49,7 +51,7 @@ function Home() {
         </div>
         <div className="Home-online-users">
           <List title="Online Users">
-            <OnlineUsers />
+            <OnlineUsers socket={socket} />
           </List>
         </div>
       </div>
