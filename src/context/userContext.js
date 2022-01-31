@@ -1,20 +1,11 @@
 import React from "react";
+import useLocalStorage from "./../hooks/useLocalStorage";
 
 const UserContext = React.createContext();
 
-class UserContextProvider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { user: {}, setUser: this.setUser };
-  }
-
-  setUser = user => {
-    this.setState({ user: user });
-  };
-
-  render() {
-    return <UserContext.Provider value={this.state}>{this.props.children}</UserContext.Provider>;
-  }
+function UserContextProvider(props) {
+  const [user, setUser] = useLocalStorage("cohatch_user", {});
+  return <UserContext.Provider value={{ user, setUser }}>{props.children}</UserContext.Provider>;
 }
 
-export { UserContextProvider, UserContext };
+export { UserContext, UserContextProvider };

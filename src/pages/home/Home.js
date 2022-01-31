@@ -9,9 +9,10 @@ import Input from "../../components/input/Input";
 import httpAgent from "./../../util/httpAgent";
 import { UserContext } from "./../../context/userContext";
 
-class Home extends React.Component {
-  static contextType = UserContext;
-  componentDidMount() {
+function Home(props) {
+  const [error, setError] = React.useState(false);
+  const userContext = React.useContext(UserContext);
+  React.useEffect(() => {
     const fetchUser = async () => {
       try {
         const option = {
@@ -21,47 +22,44 @@ class Home extends React.Component {
         const serverResponse = await httpAgent("GET", `${process.env.REACT_APP_AUTH_API}/api/v1/authorize`, option);
         if (serverResponse.ok) {
           const jsonResponse = await serverResponse.json();
-          this.context.setUser(jsonResponse["payload"]);
+          userContext.setUser(jsonResponse["payload"]);
         } else {
-          this.setState({ error: true });
+          setError(true);
         }
       } catch (error) {
-        console.error(error);
-        this.setState({ error: true });
+        setError(true);
       }
     };
 
     fetchUser();
-  }
-  render() {
-    return (
-      <div className="Home">
-        <div className="Home-main">
-          <div className="Home-recent-chats">
-            <List title="Recent Chats">
-              <RecentChats />
-            </List>
+  }, []);
+  return (
+    <div className="Home">
+      <div className="Home-main">
+        <div className="Home-recent-chats">
+          <List title="Recent Chats">
+            <RecentChats />
+          </List>
+        </div>
+        <div className="Home-chat-area">
+          <div className="header">
+            <ChatHeader />
           </div>
-          <div className="Home-chat-area">
-            <div className="header">
-              <ChatHeader />
-            </div>
-            <div className="messages">
-              <Messages />
-            </div>
-            <div className="input">
-              <Input />
-            </div>
+          <div className="messages">
+            <Messages />
           </div>
-          <div className="Home-online-users">
-            <List title="Online Users">
-              <OnlineUsers />
-            </List>
+          <div className="input">
+            <Input />
           </div>
         </div>
+        <div className="Home-online-users">
+          <List title="Online Users">
+            <OnlineUsers />
+          </List>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Home;

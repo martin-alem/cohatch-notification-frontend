@@ -2,8 +2,8 @@ import React from "react";
 import "./Navigation.css";
 import httpAgent from "./../../util/httpAgent";
 
-class Navigation extends React.Component {
-  logout = async () => {
+function Navigation() {
+  const logout = async () => {
     try {
       const option = {
         headers: { Accept: "application/json" },
@@ -20,19 +20,19 @@ class Navigation extends React.Component {
       console.error(error);
     }
   };
-  render() {
-    return (
-      <div className="Navigation">
-        <div className="Navigation-notification">
-          <div className="floating ui black label">220</div>
-          <span className="material-icons-outlined Navigation-notification">notifications</span>
-        </div>
-        <div className="Navigation-logout">
-          <span onClick={this.logout} className="material-icons-outlined Navigation-logout">logout</span>
-        </div>
+  return (
+    <div className="Navigation">
+      <div className="Navigation-notification">
+        <div className="floating ui black label">220</div>
+        <span className="material-icons-outlined Navigation-notification">notifications</span>
       </div>
-    );
-  }
+      <div className="Navigation-logout">
+        <span onClick={logout} className="material-icons-outlined Navigation-logout">
+          logout
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export default Navigation;

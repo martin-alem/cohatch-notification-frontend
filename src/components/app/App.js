@@ -4,21 +4,21 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./../../pages/home/Home";
 import Login from "./../../pages/login/Login";
 import { UserContextProvider } from "./../../context/userContext";
+import { SocketContextProvider } from "./../../context/socketContext";
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
+function App() {
+  return (
+    <div className="App">
+      <UserContextProvider>
         <Switch>
-          <UserContextProvider>
-            <Route path="/" exact component={Login} />
+          <Route path="/" exact component={Login} />
+          <SocketContextProvider>
             <Route path="/home" exact component={Home} />
-          </UserContextProvider>
+          </SocketContextProvider>
         </Switch>
-        <Login />
-      </div>
-    );
-  }
+      </UserContextProvider>
+    </div>
+  );
 }
 
 export default App;

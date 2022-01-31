@@ -5,13 +5,11 @@ import httpAgent from "./../../util/httpAgent";
 import Alert from "../../components/alert/Alert";
 import { UserContext } from "./../../context/userContext";
 
-class Login extends React.Component {
-  static contextType = UserContext;
-  constructor(props) {
-    super(props);
-    this.state = { error: false };
-  }
-  onSuccess = async ({ tokenId }) => {
+function Login() {
+  const userContext = React.useContext(UserContext);
+  const [error, setError] = React.useState(false);
+
+  const onSuccess = async ({ tokenId }) => {
     try {
       const option = {
         headers: { Accept: "application/json", Authorization: "Bearer " + tokenId },
@@ -21,46 +19,44 @@ class Login extends React.Component {
       const serverResponse = await httpAgent("POST", `${process.env.REACT_APP_AUTH_API}/api/v1/login`, option);
       if (serverResponse.ok) {
         const jsonResponse = await serverResponse.json();
-        this.context.setUser(jsonResponse["payload"]);
+        userContext.setUser(jsonResponse["payload"]);
         window.location.replace("/home");
       } else {
-        this.setState({ error: true });
+        setError(true);
       }
     } catch (error) {
       console.error(error);
-      this.setState({ error: true });
+      setError(true);
     }
   };
 
-  onFailure = error => {
-    this.setState({ error: true });
+  const onFailure = error => {
+    setError(true);
   };
-  render() {
-    const visibility = this.state.error ? "visible" : "hidden";
-    return (
-      <div className="Login">
-        <Alert heading="There was an error authenticating" message="Google was unable to to verify your Google account" type="warning" visibility={visibility} />
-        <div className="ui card">
-          <div className="content">
-            <div className="header">COhatch</div>
-            <div className="meta">Chat Application</div>
-            <div className="description">
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                buttonText="Continue With Google"
-                onSuccess={this.onSuccess}
-                onFailure={this.onFailure}
-                theme="dark"
-                responseType="token"
-                cookiePolicy={"single_host_origin"}
-              />
-            </div>
+  const visibility = error ? "visible" : "hidden";
+  return (
+    <div className="Login">
+      <Alert heading="There was an error authenticating" message="Google was unable to to verify your Google account" type="warning" visibility={visibility} />
+      <div className="ui card">
+        <div className="content">
+          <div className="header">COhatch</div>
+          <div className="meta">Chat Application</div>
+          <div className="description">
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Continue With Google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              theme="dark"
+              responseType="token"
+              cookiePolicy={"single_host_origin"}
+            />
           </div>
-          <div className="extra content">&copy;COhatch</div>
         </div>
+        <div className="extra content">&copy;COhatch</div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Login;
