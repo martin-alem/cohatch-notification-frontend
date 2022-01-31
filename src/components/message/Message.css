@@ -19,11 +19,11 @@
 }
 
 .Message-local {
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 .Message-remote {
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .Message-time {

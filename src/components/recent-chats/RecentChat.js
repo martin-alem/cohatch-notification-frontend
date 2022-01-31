@@ -1,138 +1,32 @@
 import React from "react";
 import "./RecentChat.css";
 import Chat from "../chat/Chat";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import httpAgent from "./../../util/httpAgent";
+import { UserContext } from "./../../context/userContext";
 
 function RecentChat() {
-  const recentChats = [
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-    {
-      firstName: "Martin",
-      lastName: "John",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 400,
-      photo: "",
-    },
-    {
-      firstName: "Mary",
-      lastName: "Jane Jane Jane",
-      lastMessage: "Hi martin, hope you have successfully finished that project",
-      time: "12:45AM",
-      unread: 4,
-      photo: "",
-    },
-  ];
+  const [recentChats, setRecentChats] = useLocalStorage("recent_chats", []);
+  const userContext = React.useContext(UserContext);
+  const user = userContext.user;
+
+  React.useEffect(() => {
+    const fetchRecentChats = async () => {
+      try {
+        const option = {
+          headers: { Accept: "application/json" },
+          body: null,
+        };
+        const serverResponse = await httpAgent("GET", `${process.env.REACT_APP_MESSAGING_API}/api/v1/recent_chats/${user._id}`, option);
+        if (serverResponse.ok) {
+          const jsonResponse = await serverResponse.json();
+          setRecentChats(jsonResponse["payload"]);
+        }
+      } catch (error) {}
+    };
+
+    fetchRecentChats();
+  }, []);
   return (
     <div className="RecentChat">
       {recentChats.map((chat, index) => {

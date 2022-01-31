@@ -1,8 +1,12 @@
 import React from "react";
 import "./Navigation.css";
 import httpAgent from "./../../util/httpAgent";
+import {NotificationContext} from "./../../context/notificationContext"
 
-function Navigation() {
+function Navigation ()
+{
+  const notificationContext = React.useContext( NotificationContext )
+  const { notificationCount, setNotificationCount } = notificationContext;
   const logout = async () => {
     try {
       const option = {
@@ -24,7 +28,7 @@ function Navigation() {
   return (
     <div className="Navigation">
       <div className="Navigation-notification">
-        <div className="floating ui black label">220</div>
+        <div className="floating ui black label">{notificationCount}</div>
         <span className="material-icons-outlined Navigation-notification">notifications</span>
       </div>
       <div className="Navigation-logout">

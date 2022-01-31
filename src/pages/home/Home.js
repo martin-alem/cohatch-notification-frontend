@@ -1,6 +1,5 @@
 import React from "react";
 import "./Home.css";
-import RecentChats from "../../components/recent-chats/RecentChat";
 import OnlineUsers from "../../components/online_users/OnlineUser";
 import ChatHeader from "../../components/chat_header/ChatHeader";
 import List from "../../components/list/List";
@@ -33,20 +32,15 @@ function Home() {
   return (
     <div className="Home">
       <div className="Home-main">
-        <div className="Home-recent-chats">
-          <List title="Recent Chats">
-            <RecentChats />
-          </List>
-        </div>
         <div className="Home-chat-area">
           <div className="header">
             <ChatHeader />
           </div>
           <div className="messages">
-            <Messages />
+            <Messages socket={socket}/>
           </div>
           <div className="input">
-            <Input />
+            <Input socket={socket} />
           </div>
         </div>
         <div className="Home-online-users">

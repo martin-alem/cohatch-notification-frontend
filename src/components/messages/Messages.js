@@ -1,122 +1,63 @@
 import React from "react";
 import "./Messages.css";
 import Message from "./../message/Message";
+import { MessageContext } from "./../../context/messageContext";
+import { UserContext } from "./../../context/userContext";
+import { NotificationContext } from "./../../context/notificationContext";
 
-function Messages() {
-  const messages = [
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "local",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-    {
-      firstName: "Martin",
-      lastName: "Alemajoh",
-      source: "remote",
-      message: "Hi martin, how are you? hope you are doing well my friend",
-      time: "11:45AM",
-    },
-  ];
+function Messages({ socket }) {
+  const notificationContext = React.useContext(NotificationContext);
+  const { notificationCount, setNotificationCount } = notificationContext;
+  const messageContext = React.useContext(MessageContext);
+  const userContext = React.useContext(UserContext);
+  const messages = messageContext.messages;
+  const user = userContext.user;
+
+  const modifyMessage = payload => {
+    const { sender, message, time } = payload;
+    const source = user["_id"] === sender["_id"] ? "local" : "remote";
+    const modifiedMessage = {
+      firstName: sender["firstName"],
+      lastName: sender["lastName"],
+      source: source,
+      message: message,
+      time: time,
+    };
+    return modifiedMessage;
+  };
+
+  const display = ({ sender }) => {
+    const current_chat = JSON.parse(window.localStorage.getItem("current_chat"));
+    if (sender._id === user._id) {
+      return true;
+    } else if (sender._id === current_chat._id) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const notify = () => {
+    setNotificationCount(prevState => prevState + 1);
+  };
+
+  React.useEffect(() => {
+    socket.on("message", payload => {
+      const modifiedMessage = modifyMessage(payload);
+      const current_chat = JSON.parse(window.localStorage.getItem("current_chat"));
+      if (Object.keys(current_chat).length > 0) {
+        if (display(payload)) {
+          messageContext.setMessages(prevState => {
+            return [...prevState, modifiedMessage];
+          });
+        } else {
+          notify();
+        }
+      } else {
+        notify();
+      }
+    });
+  }, []);
   return (
     <div className="Messages">
       {messages.map((message, index) => {
