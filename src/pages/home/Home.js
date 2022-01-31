@@ -9,8 +9,7 @@ import Input from "../../components/input/Input";
 import httpAgent from "./../../util/httpAgent";
 import { UserContext } from "./../../context/userContext";
 
-function Home(props) {
-  const [error, setError] = React.useState(false);
+function Home() {
   const userContext = React.useContext(UserContext);
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -23,12 +22,8 @@ function Home(props) {
         if (serverResponse.ok) {
           const jsonResponse = await serverResponse.json();
           userContext.setUser(jsonResponse["payload"]);
-        } else {
-          setError(true);
         }
-      } catch (error) {
-        setError(true);
-      }
+      } catch (error) {}
     };
 
     fetchUser();
