@@ -31,7 +31,7 @@ function Login() {
   };
 
   const onFailure = error => {
-    setError(true);
+    console.error(error);
   };
   const visibility = error ? "visible" : "hidden";
   return (
