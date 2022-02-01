@@ -7,7 +7,7 @@ import { NotificationContext } from "./../../context/notificationContext";
 
 function Messages({ socket }) {
   const notificationContext = React.useContext(NotificationContext);
-  const { notificationCount, setNotificationCount } = notificationContext;
+  const {setNotificationCount } = notificationContext;
   const messageContext = React.useContext(MessageContext);
   const userContext = React.useContext(UserContext);
   const messages = messageContext.messages;
@@ -37,8 +37,18 @@ function Messages({ socket }) {
     }
   };
 
-  const notify = () => {
+  const notify = payload => {
     setNotificationCount(prevState => prevState + 1);
+    const { firstName, lastName, picture } = payload.sender;
+    const title = `COhatch Notification`;
+    const body = `${firstName} ${lastName} sent a message`;
+    const options = {
+      body,
+      image: picture,
+      tag: "This is a tag",
+      renotify: true,
+    };
+    new window.Notification(title, options);
   };
 
   React.useEffect(() => {
@@ -51,12 +61,20 @@ function Messages({ socket }) {
             return [...prevState, modifiedMessage];
           });
         } else {
-          notify();
+          notify(payload);
         }
       } else {
-        notify();
+        notify(payload);
       }
     });
+  }, []);
+
+  React.useEffect(() => {
+    if (window.Notification.permission === "default") {
+      Notification.requestPermission().then(permission => {
+        console.log(`You granted us permission to display notification: ${permission}`);
+      });
+    }
   }, []);
   return (
     <div className="Messages">
